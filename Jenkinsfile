@@ -7,7 +7,7 @@ pipeline{
 stages{
   stage('terraform init'){
     steps{
-      sh 'terraform init'
+      sh 'terraform init -upgrade'
       sh 'terraform plan'
       sh 'terraform apply -auto-approve'
     }
@@ -19,3 +19,4 @@ stages{
   tfHome = tool name: 'terraform', type: 'terraform'
   return tfHome
   }
+
