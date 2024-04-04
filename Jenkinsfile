@@ -1,20 +1,14 @@
-pipeline{
+pipeline {
   agent any
-  environment {
-  PATH = "{$path}:${getTerraformPath()}"
-}
+    
+  stages{
 
-stages{
-  stage('terraform init'){
-    steps{
-      sh 'terraform init'
-      sh 'terraform apply -auto-approve'
+    stage('terraform') {
+      steps {
+	sh 'terraform init'
+        sh 'terraform apply'
+      }
     }
   }
-  
-  }
-  }
-  def getTerraformPath(){
-  tfHome = tool name: 'terraform', type: 'terraform'
-  return tfHome
-  }
+ 
+}
