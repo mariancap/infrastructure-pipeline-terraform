@@ -136,7 +136,7 @@ resource "aws_instance" "my_vm" {
 ]
 
 connection {
-	type = "ssh -i"
+	type = "ssh"
 	host = self.public_ip
 	user = "ec2-user"
 	
