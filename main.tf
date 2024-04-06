@@ -135,6 +135,13 @@ resource "aws_instance" "my_vm" {
 	  "ansible -version",
 ]
 
+connection {
+	type = "ssh"
+	host = self.public_ip
+	user = "ec2-user"
+	private_key = file("Downloads/DevOpsKey_Licenta.pem")
+}
+
 }
   tags = {
     Name = var.name_tag
