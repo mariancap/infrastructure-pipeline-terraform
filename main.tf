@@ -139,7 +139,7 @@ connection {
 	type = "ssh -i"
 	host = self.public_ip
 	user = "ec2-user"
-	private_key = file("/c/Users/tiber/DevOpsKey_Licenta.pem")
+	private_key = file("Downloads/DevOpsKey_Licenta.pem")
 }
 
 }
