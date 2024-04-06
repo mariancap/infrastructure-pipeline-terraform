@@ -136,7 +136,7 @@ resource "aws_instance" "my_vm" {
 ]
 
 connection {
-	type = "ssh"
+	type = "ssh -i"
 	host = self.public_ip
 	user = "ec2-user"
 	private_key = file("/c/Users/tiber/DevOpsKey_Licenta.pem")
