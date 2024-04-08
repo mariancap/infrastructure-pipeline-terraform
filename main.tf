@@ -145,7 +145,6 @@ connection {
           "sudo  yum install epel-release-latest-7.noarch.rpm -y",
           "sudo yum update -y",
           "sudo yum install git python python-devel python-pip openssl ansible -y",
-          "sudo ansible -version",
  ]
  }
 
