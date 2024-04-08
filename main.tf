@@ -134,7 +134,7 @@ resource "aws_instance" "my_vm" {
  connection {
         type = "ssh"
         user = "ec2-user"
-        private_key = file("/opt/terraform-licenta/tfkey")
+        private_key = local_file.TF_key.filename
         host = self.public_ip
 } 
 
