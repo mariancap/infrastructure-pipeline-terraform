@@ -104,59 +104,47 @@ resource "aws_route_table_association" "rt_association_marian" {
   route_table_id = aws_route_table.rt_custom_internet.id
 }
 
-#resource "aws_key_pair" "TF_key"{
-#	key_name = "TF_key"
-#	public_key = tls_private_key.rsa.public_key_openssh
-#
-#}
+resource "aws_key_pair" "TF_key"{
+	key_name = "TF_key"
+	public_key = tls_private_key.rsa.public_key_openssh
 
-#resource "local_file" "TF_key" {
-#  content  = tls_private_key.rsa.private_key_pem
-#  filename = "tfkey"
-#}
+}
+
+resource "local_file" "TF_key" {
+  content  = tls_private_key.rsa.private_key_pem
+  filename = "tfkey"
+}
 	
 
-#resource "tls_private_key" "rsa" {
-#  algorithm = "RSA"
-#  rsa_bits  = 4096
-#}
+resource "tls_private_key" "rsa" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
 
 resource "aws_instance" "my_vm" {
   ami           = var.ami //Linux AMI
   instance_type = var.instance_type
-  key_name      = "DevOpsKey_Licenta"
+  key_name      = "TF_key"
 
   subnet_id                   = aws_subnet.public_subnet.id
   vpc_security_group_ids      = [aws_security_group.terra_script_sg.id]
   associate_public_ip_address = true
   
-  connection {
-	type = "ssh"
-	user = "ec2-user"
-	private_key = file("/opt/DevOpsKey_Licenta.pem")
-	host = self.public_ip
+ 
+ connection {
+        type = "ssh"
+        user = "ec2-user"
+        private_key = file("/opt/terraform-licenta/tfkey")
+        host = self.public_ip
+} 
+
+provisioner "remote-exec" {
+	inline = [
+	"sudo yum update -y"
+]
+
+
 }
-  provisioner "remote-exec" {
-	 inline = [
-	 "sudo su -",
-          "yum update -y",
-          "apt install default-jdk",
-          "cd /opt",
-          "wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz",
-          "tar -zvxf apache-tomcat-9.0.86.tar.gz",
-          "cd apache-tomcat-9.0.86",
-          "cd bin",
-          "chmod +x startup.sh",
-          "chmod +x shutdown.sh",
-          "./startup.sh",
-          "cd",
-          "wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
-          "sudo  yum install epel-release-latest-7.noarch.rpm -y",
-          "yum update -y",
-          "yum install git python python-devel python-pip openssl ansible -y",
-          "ansible -version",
- ]
- }
 
   
   tags = {
