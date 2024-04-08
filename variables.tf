@@ -1,7 +1,7 @@
 variable "ami" {
   type        = string
-  description = "AMI for Ubuntu"
-  default     = "ami-080e1f13689e07408"
+  description = "AMI for Amazon Linux"
+  default     = "ami-051f8a213df8bc089"
 }
 
 variable "available_zones_us" {
