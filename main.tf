@@ -133,7 +133,7 @@ resource "aws_instance" "my_vm" {
   connection {
 	type = "ssh"
 	user = "ec2-user"
-	private_key = file("/root/.ssh/DevOpsKey_Licenta.pem")
+	private_key = file("/opt/DevOpsKey_Licenta.pem")
 	host = self.public_ip
 }
   provisioner "remote-exec" {
