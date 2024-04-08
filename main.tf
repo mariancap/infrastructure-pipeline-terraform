@@ -110,15 +110,16 @@ resource "aws_key_pair" "TF_key"{
 
 }
 
-resource "local_file" "TF_key" {
-  content  = tls_private_key.rsa.private_key_pem
-  filename = "tfkey"
-}
 	
 
 resource "tls_private_key" "rsa" {
   algorithm = "RSA"
   rsa_bits  = 4096
+}
+
+resource "local_file" "TF_key" {
+  content  = tls_private_key.rsa.private_key_pem
+  filename = "tfkey"
 }
 
 resource "aws_instance" "my_vm" {
@@ -131,20 +132,17 @@ resource "aws_instance" "my_vm" {
   associate_public_ip_address = true
   
  
- connection {
+connection {
         type = "ssh"
         user = "ec2-user"
-        private_key = local_file.TF_key.filename
+        private_key = file(local_file.TF_key.filename)
         host = self.public_ip
-} 
-
-provisioner "remote-exec" {
-	inline = [
-	"sudo yum update -y"
-]
-
-
 }
+  provisioner "remote-exec" {
+         inline = [
+          "sudo yum upgrade -y",
+ ]
+ }
 
   
   tags = {
