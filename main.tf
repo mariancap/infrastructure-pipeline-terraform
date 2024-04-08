@@ -140,23 +140,12 @@ connection {
 }
   provisioner "remote-exec" {
          inline = [
-         "sudo su -",
-          "yum update -y",
-          "apt install default-jdk",
-          "cd /opt",
-          "wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz",
-          "tar -zvxf apache-tomcat-9.0.86.tar.gz",
-          "cd apache-tomcat-9.0.86",
-          "cd bin",
-          "chmod +x startup.sh",
-          "chmod +x shutdown.sh",
-          "./startup.sh",
-          "cd",
-          "wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+          "sudo yum upgrade -y"
+	  "sudo wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
           "sudo  yum install epel-release-latest-7.noarch.rpm -y",
-          "yum update -y",
-          "yum install git python python-devel python-pip openssl ansible -y",
-          "ansible -version",
+          "sudo yum update -y",
+          "sudo yum install git python python-devel python-pip openssl ansible -y",
+          "sudo ansible -version",
  ]
  }
 
