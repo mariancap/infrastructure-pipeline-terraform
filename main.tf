@@ -150,12 +150,12 @@ connection {
           "cd /opt",
           "sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz",
           "sudo tar -zvxf apache-tomcat-9.0.86.tar.gz",
-          "cd apache-tomcat-9.0.86",
-          "cd bin",
+          "sudo cd apache-tomcat-9.0.86",
+          "sudo cd bin",
           "sudo chmod +x startup.sh",
           "sudo chmod +x shutdown.sh",
-          "./startup.sh",
-          "cd",
+          "sudo ./startup.sh",
+          "sudo cd",
 ]
  }
 
