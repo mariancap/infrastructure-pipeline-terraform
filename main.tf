@@ -146,7 +146,7 @@ connection {
           "sudo yum update -y",
           "sudo yum install git python python-devel python-pip openssl ansible -y",
 	  "ansible --version",
-	  "sudo dnf install java-11-amazon-corretto-devel",
+	  "sudo dnf install java-11-amazon-corretto-devel -y",
           "cd /opt",
           "sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz",
           "sudo tar -zvxf apache-tomcat-9.0.86.tar.gz",
