@@ -58,6 +58,16 @@ resource "aws_security_group" "terra_script_sg" {
     cidr_blocks = ["0.0.0.0/0"]
 
   }
+
+
+ ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+
   tags = {
     Name        = "terra_script_sg"
     Description = "terra_script_sg"
@@ -150,8 +160,8 @@ connection {
           "cd /opt",
           "sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz",
           "sudo tar -zvxf apache-tomcat-9.0.86.tar.gz",
-          "sudo cd apache-tomcat-9.0.86",
-          "sudo cd bin",
+          "sudo cd /apache-tomcat-9.0.86",
+          "sudo cd /bin",
           "sudo chmod +x startup.sh",
           "sudo chmod +x shutdown.sh",
           "sudo ./startup.sh",
