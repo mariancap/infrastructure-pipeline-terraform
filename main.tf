@@ -157,16 +157,13 @@ connection {
           "sudo yum install git python python-devel python-pip openssl ansible -y",
 	  "ansible --version",
 	  "sudo dnf install java-11-amazon-corretto-devel -y",
-          "sudo su -",
-	  "cd /opt",
-          "sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.86/bin/apache-tomcat-9.0.86.tar.gz",
-          "sudo tar -zvxf apache-tomcat-9.0.86.tar.gz",
-          "cd apache-tomcat-9.0.86/",
-          "cd /bin",
-          "chmod +x startup.sh",
-          "chmod +x shutdown.sh",
-          "./startup.sh",
-          "cd",
+          "cd /opt/",
+	  "sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.87/bin/apache-tomcat-9.0.87.tar.gz",
+	  "sudo tar -xvf apache-tomcat-9.0.87.tar.gz",
+	  "sudo chown -R ec2-user:ec2-user apache-tomcat-9.0.87",
+	  "chmod -R 755 apache-tomcat-9.0.87",
+	  "cd apache-tomcat-9.0.87/bin",
+	  "./startup.sh",
 ]
  }
 
