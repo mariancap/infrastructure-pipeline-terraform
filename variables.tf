@@ -20,7 +20,7 @@ variable "instance_type" {
 variable "name_tag" {
   type        = string
   description = "Instance name"
-  default     = "My EC2 Instance"
+  default     = "Terra-Tomcat-Server"
 }
 
 variable "vpc_name" {
