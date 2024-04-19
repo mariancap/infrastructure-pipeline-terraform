@@ -118,7 +118,7 @@ resource "aws_route_table_association" "rt_association_marian" {
 
 
 
-resource "aws_instance" "my_vm" {
+resource "aws_instance" "my-vm" {
   ami           = var.ami //Linux AMI
   instance_type = var.instance_type
   key_name      = "DevOpsKey_Licenta"
