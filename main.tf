@@ -115,10 +115,13 @@ resource "aws_route_table_association" "rt_association_marian" {
 }
 
 resource "aws_key_pair" "TF_key"{
-	key_name = "TF_key"
-	public_key = tls_private_key.rsa.public_key_openssh
+        key_name = "TF_key"
+        public_key = tls_private_key.rsa.public_key_openssh
 
 }
+
+
+
 resource "tls_private_key" "rsa" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -128,9 +131,6 @@ resource "local_file" "TF_key" {
   content  = tls_private_key.rsa.private_key_pem
   filename = "tfkey"
 }
-	
-
-
 
 resource "aws_instance" "my_vm" {
   ami           = var.ami //Linux AMI
@@ -141,15 +141,34 @@ resource "aws_instance" "my_vm" {
   vpc_security_group_ids      = [aws_security_group.terra_script_sg.id]
   associate_public_ip_address = true
 
-  connection {
+
+connection {
         type = "ssh"
         user = "ec2-user"
         private_key = file(local_file.TF_key.filename)
         host = self.public_ip
 }
-  
+  provisioner "remote-exec" {
+         inline = [
+          "sudo yum upgrade -y",
+          "sudo wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+          "sudo yum install epel-release-latest-7.noarch.rpm -y",
+          "sudo yum update -y",
+          "sudo yum install git python python-devel python-pip openssl ansible -y",
+          "ansible --version",
+          "sudo dnf install java-11-amazon-corretto-devel -y",
+          "cd /opt/",
+          "sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.87/bin/apache-tomcat-9.0.87.tar.gz",
+          "sudo tar -xvf apache-tomcat-9.0.87.tar.gz",
+          "sudo chown -R ec2-user:ec2-user apache-tomcat-9.0.87",
+          "chmod -R 755 apache-tomcat-9.0.87",
+          "cd apache-tomcat-9.0.87/bin",
+          "./startup.sh",
+]
+ }
+
+
   tags = {
     Name = var.name_tag
   }
 }
-
