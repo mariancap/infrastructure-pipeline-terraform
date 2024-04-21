@@ -136,7 +136,7 @@ resource "tls_private_key" "rsa" {
 resource "aws_instance" "my_vm" {
   ami           = var.ami //Linux AMI
   instance_type = var.instance_type
-  key_name      = "tfkey"
+  key_name      = "TF_key"
 
   subnet_id                   = aws_subnet.public_subnet.id
   vpc_security_group_ids      = [aws_security_group.terra_script_sg.id]
