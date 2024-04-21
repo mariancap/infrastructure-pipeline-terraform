@@ -148,24 +148,6 @@ connection {
         private_key = file(local_file.TF_key.filename)
         host = self.public_ip
 }
-  provisioner "remote-exec" {
-         inline = [
-          "sudo yum upgrade -y",
-          "sudo wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
-          "sudo yum install epel-release-latest-7.noarch.rpm -y",
-          "sudo yum update -y",
-          "sudo yum install git python python-devel python-pip openssl ansible -y",
-          "ansible --version",
-          "sudo dnf install java-11-amazon-corretto-devel -y",
-          "cd /opt/",
-          "sudo wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.87/bin/apache-tomcat-9.0.87.tar.gz",
-          "sudo tar -xvf apache-tomcat-9.0.87.tar.gz",
-          "sudo chown -R ec2-user:ec2-user apache-tomcat-9.0.87",
-          "chmod -R 755 apache-tomcat-9.0.87",
-          "cd apache-tomcat-9.0.87/bin",
-          "./startup.sh",
-]
- }
 
 
   tags = {
