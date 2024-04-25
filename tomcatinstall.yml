@@ -1,0 +1,42 @@
+---
+- name: Install Apache Tomcat server
+  hosts: tomcat
+  become: true
+  tasks:
+    - name: update apt package
+      yum:
+        update_cache: yes
+
+    - name: Install Java21
+      yum:
+        name: java-17-amazon-corretto.x86_64
+        state: present
+    
+    - name: Download Tomcat11
+      get_url:
+        url: "https://dlcdn.apache.org/tomcat/tomcat-11/v11.0.0-M19/bin/apache-tomcat-11.0.0-M19.tar.gz"
+        dest: "/opt/apache-tomcat-11.0.0-M19.tar.gz"
+    
+    - name: Extract Tomcat11
+      unarchive:
+        src: "/opt/apache-tomcat-11.0.0-M19.tar.gz"
+        dest: "/opt"
+        remote_src: yes
+
+    - name: Set permission for Tomcat directory
+      file:
+        path: "/opt/apache-tomcat-11.0.0-M19"
+        owner: "{{ tomcat_user }}"
+        group: "{{ tomcat_group }}"
+        mode: "0755"
+    
+    - name: Start Tomcat service
+      shell: "/opt/apache-tomcat-11.0.0-M19/bin/startup.sh"
+      ignore_errors: true
+
+
+    - name: Wait for Tomcat to start
+      wait_for:
+        host: localhost
+        port: 8080
+        state: started    

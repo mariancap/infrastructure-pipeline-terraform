@@ -40,7 +40,7 @@ resource "aws_subnet" "private_subnet" {
 
 
 
-resource "aws_security_group" "terra_script_sg" {
+resource "aws_security_group" "terra_tomcat_sg" {
 
   vpc_id = aws_vpc.vpc_marian_licenta.id
 
@@ -68,9 +68,17 @@ resource "aws_security_group" "terra_script_sg" {
   }
 
 
+ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["10.0.1.144/32"]
+  }
+
+
   tags = {
-    Name        = "terra_script_sg"
-    Description = "terra_script_sg"
+    Name        = "terra_tomcat_sg"
+    Description = "terra_tomcat_sg"
   }
 
 }
@@ -114,43 +122,42 @@ resource "aws_route_table_association" "rt_association_marian" {
   route_table_id = aws_route_table.rt_custom_internet.id
 }
 
-resource "aws_key_pair" "TF_key"{
-        key_name = "TF_key"
-        public_key = tls_private_key.rsa.public_key_openssh
+#resource "aws_key_pair" "TF_key"{
+#        key_name = "TF_key"
+#        public_key = tls_private_key.rsa.public_key_openssh
+#
+#}
 
-}
 
 
+#resource "tls_private_key" "rsa" {
+#  algorithm = "RSA"
+#  rsa_bits  = 4096
+#}
 
-resource "tls_private_key" "rsa" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "local_file" "TF_key" {
-  content  = tls_private_key.rsa.private_key_pem
-  filename = "tfkey"
-}
+#resource "local_file" "TF_key" {
+#  content  = tls_private_key.rsa.private_key_pem
+#  filename = "tfkey"
+#}
 
 resource "aws_instance" "my_vm" {
   ami           = var.ami //Linux AMI
   instance_type = var.instance_type
-  key_name      = "TF_key"
+  key_name      = "DevOpsKey_Licenta"
 
   subnet_id                   = aws_subnet.public_subnet.id
-  vpc_security_group_ids      = [aws_security_group.terra_script_sg.id]
+  vpc_security_group_ids      = [aws_security_group.terra_tomcat_sg.id]
   associate_public_ip_address = true
 
 
-connection {
-        type = "ssh"
-        user = "ec2-user"
-        private_key = file(local_file.TF_key.filename)
-        host = self.public_ip
-}
-
-
+  
   tags = {
     Name = var.name_tag
   }
+
+#provisioner "local-exec" {
+#    command = "echo ${aws_instance.my_vm.public_ip} >> /etc/ansible/hosts"
+#  }
 }
+
+
