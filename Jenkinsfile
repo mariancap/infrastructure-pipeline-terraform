@@ -20,6 +20,8 @@ pipeline{
         stage('Ansible run'){
             steps{
                 sh 'ansible-playbook -i inventory tomcatinstall.yml'
+
+
             }
         }
 
