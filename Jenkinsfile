@@ -17,13 +17,7 @@ pipeline{
                 sh 'terraform apply --auto-approve'
             }
         }
-        stage('Ansible run'){
-            steps{
-                sh 'ansible-playbook -i inventory tomcatinstall.yml'
-
-
-            }
-        }
+       
 
         
     }
