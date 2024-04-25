@@ -156,7 +156,7 @@ resource "aws_instance" "my_vm" {
   }
 
 provisioner "local-exec" {
-    command = "sudo echo ${aws_instance.my_vm.public_ip} > /opt/infrastructure-pipeline-terraform/inventory"
+    command = "chmod +x /opt/infrastructure-pipeline-terraform/inventory && echo ${aws_instance.my_vm.public_ip} > /opt/infrastructure-pipeline-terraform/inventory"
   }
 }
 
