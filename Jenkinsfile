@@ -17,5 +17,12 @@ pipeline{
                 sh 'terraform apply --auto-approve'
             }
         }
+	
+	stage('Ansible-playbook run'){
+            steps{
+                sh 'ansible-playbook tomcatinstall.yml'
+            }
+        }
+
         }
 }
