@@ -155,9 +155,6 @@ resource "aws_instance" "my_vm" {
     Name = var.name_tag
   }
 
-provisioner "local-exec" {
-    command = "echo ${aws_instance.my_vm.public_ip} > ./inventory"
-  }
 }
 
 
