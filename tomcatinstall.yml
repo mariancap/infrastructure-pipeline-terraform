@@ -1,6 +1,6 @@
 ---
 - name: Install Apache Tomcat server
-  hosts: tomcat
+  hosts: all
   become: true
   tasks:
     - name: update apt package
@@ -26,8 +26,8 @@
     - name: Set permission for Tomcat directory
       file:
         path: "/opt/apache-tomcat-11.0.0-M19"
-        owner: "{{ tomcat_user }}"
-        group: "{{ tomcat_group }}"
+        owner: "ec2-user"
+        group: "ec2-user"
         mode: "0755"
     
     - name: Start Tomcat service

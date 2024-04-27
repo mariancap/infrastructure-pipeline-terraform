@@ -1,0 +1,14 @@
+plugin: aws_ec2
+regions:
+  - "us-east-1"
+keyed_groups:
+  - key: tags.Name
+  - key: instance_type
+    prefix: instance_type
+  - key: placement.region
+    prefix: aws_region
+filters:
+  instance-state-name: running
+  tag:Name: Terra-Tomcat-Server
+compose:
+  ansible_host: public_ip_address
