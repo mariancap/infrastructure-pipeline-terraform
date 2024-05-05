@@ -25,7 +25,7 @@ pipeline{
 
 	stage('Ansible-playbook'){
             steps{
-                sh 'sudo ansible-playbook tomcatinstall.yml'
+                sh 'sudo ansible-playbook dockerinstall.yml'
             }
         }
 

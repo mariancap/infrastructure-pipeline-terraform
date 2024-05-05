@@ -1,0 +1,20 @@
+- name: Install Docker on Amazon Linux 2
+  hosts: all
+  become: true
+  tasks:
+    - name: Install required dependecies
+      yum:
+        name:
+          - amazon-linux-extras
+          - docker
+        state: present
+
+    - name: Enable Docker service
+      systemd:
+        name: docker
+        enabled: yes
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
