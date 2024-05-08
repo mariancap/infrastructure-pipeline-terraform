@@ -9,6 +9,6 @@ keyed_groups:
     prefix: aws_region
 filters:
   instance-state-name: running
-  tag:Name: Terra-Tomcat-Server
+  tag:Name: Terra-Docker-Server
 compose:
   ansible_host: public_ip_address
