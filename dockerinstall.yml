@@ -1,7 +1,6 @@
-- name: Install Docker on Amazon Linux 2
+- name: Install Docker on Amazon Linux
   hosts: all
-  become_method: sudo
-  becom_user: root
+  become: true
   tasks:
     - name: update yum package
       yum:
