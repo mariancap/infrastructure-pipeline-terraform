@@ -3,11 +3,11 @@
   become: true
   tasks:
     - name: update yum package
-      yum:
+      dnf:
         update_cache: yes
 
     - name: Install required dependecies
-      yum:
+      dnf:
         name:
           - docker
         state: present
